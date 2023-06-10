@@ -25,18 +25,29 @@ highScoreEL.textContent = highScore;
 btnCheck.addEventListener('click', onClick)
 
 function onClick() {
-    //grabs the value from the input field and converts it to a number
-    const guessedNumber = document.getElementById('guess-number-input').valueAsNumber
+    //grabs the value from the input field
+    //not converting the guessedNumber to a number because we can't find the length of a number, which we need to do in the conditional in the try statement.
+    const guessedNumber = document.getElementById('guess-number-input').value
 
-    //updates the UI and highscore when number is guessed correctly
-    if(guessedNumber === randomNumber){
-        body.className += ' background-green'
-        message.textContent = '🎉Correct Number!'
-        number.textContent = randomNumber
-
-        if(highScoreEL.textContent < scoreEL.textContent) {
-            highScoreEL.textContent = scoreEL.textContent
-        }
+    //try throws the error while the catch receives the error and displays the message of the error
+    try {
+        //checks if the input field is not empty, runs the code to update UI if the input field is not empty and throws an error if it is empty
+        if (guessedNumber.length > 0) {
+            //updates the UI and highscore when number is guessed correctly
+            if(guessedNumber == randomNumber){
+                body.classList.add('background-green')
+                message.textContent = '🎉Correct Number!'
+                number.textContent = randomNumber
+                
+                if(highScoreEL.textContent < scoreEL.textContent) {
+                    highScoreEL.textContent = scoreEL.textContent
+                }
+            } 
+        } else {
+            throw new Error('Please enter a number')
+        } 
+    } catch (error) {
+        message.textContent = error.message
     }
 }
 
